@@ -12,7 +12,7 @@ const HeroBanner = ({movie, onBack, onNext}) => {
           <button onClick={onNext} className='outline-none'><BsArrowRightCircleFill/></button>
         </div>
       
-        <div style={{backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.98) 90%), url(${imgPath + movie.poster_path})`,}} className={`w-full h-screen  bg-center bg-cover bg-no-repeat rounded`}></div>
+        <div style={{backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.98) 90%), url(${imgPath + movie.backdrop_path})`,}} className={`w-full h-screen  bg-center bg-cover bg-no-repeat rounded`}></div>
         <div className=" mx-12 md:w-1/3 absolute">
           <h2 className="text-4xl text-white font-bold">{movie.title}</h2>
           <p className="font-semibold text-white text-sm py-6">

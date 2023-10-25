@@ -3,11 +3,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 
-const MovieCard = ({movie}) => {
+const MovieCard = ({movie, category}) => {
     const imgPath = "https://image.tmdb.org/t/p/original";
     return (
     <div className="min-w-[15rem] h-96">
-        <Link href={`/${movie.id}`}>
+        <Link href={`${category}/${movie.id}`}>
           <Image
             src={imgPath + movie.poster_path}
             alt={movie.name ? movie.name: movie.title}

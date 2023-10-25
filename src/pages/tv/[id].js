@@ -3,7 +3,7 @@ import Image from "next/image";
 
 
 
-const Movie = ({data}) => {
+const Series = ({data}) => {
   
    console.log(data) 
     const imgPath = 'https://image.tmdb.org/t/p/original' 
@@ -11,7 +11,7 @@ const Movie = ({data}) => {
   return(
         <div className="mx-auto md:w-9/12 my-20 text-white border-2 border-white">
           <div className="grid place-content-center">
-          <Image src={imgPath + data.poster_path} alt={data.title} width={800} height={800} className=" h-[35rem] object-cover"/>
+          <Image src={imgPath + data.backdrop_path} alt={data.title} width={800} height={800} className=" h-[35rem] w-full object-cover"/>
 
           </div>
           <h2>{data.title}</h2> 
@@ -24,7 +24,7 @@ const Movie = ({data}) => {
 };
 
 
-export default Movie;
+export default Series;
 export const getStaticPaths = async() => {
   const res = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.API_KEY}&language=en-US&page=1`)
   const pathdata = await res.json()
@@ -36,7 +36,7 @@ export const getStaticPaths = async() => {
         paths: path, fallback: true}
 }
 export const getStaticProps = async({params}) =>{
-    const res = await fetch(`https://api.themoviedb.org/3/movie/${params.id}?api_key=${process.env.API_KEY}&language=en-US&page=1`)
+    const res = await fetch(`https://api.themoviedb.org/3/tv/${params.id}?api_key=${process.env.API_KEY}&language=en-US&page=1`)
     const data = await res.json()
  
    return { props: {data}}
