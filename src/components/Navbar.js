@@ -4,7 +4,7 @@ const Navbar = ({searchTerm}) => {
   const [search, setSearch] = useState('')
   return (
     <>
-    <nav className="flex justify-between items-center px-4 py-2 shadow-md ">
+    <nav className="flex justify-between items-center px-4 py-2 shadow-md bg-black border-b-2 border-[#888] ">
     <div className="border-4 text-3xl font-semibold text-[#880808]">ForMovies</div>
     <ul className="flex gap-4 text-white font-medium ">
       <li className='p-2 hover:text-red-800'>
