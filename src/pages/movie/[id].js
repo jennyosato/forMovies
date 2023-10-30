@@ -6,9 +6,16 @@ import { useRouter } from "next/router";
 import Cast_card from "@/components/cast_card";
 import Review_card from "@/components/review_card";
 import axios from "axios";
+import Rating from "@/components/leave_a_review";
 
 const Movie = ({ data, cast_info, reviews, trailer }) => {
-  console.log(cast_info);
+  //  console.log(trailer)
+  const video = trailer.results.filter(
+    (trailer) =>
+      trailer.type == "Trailer" && trailer.site == "YouTube" && trailer.official == true
+  );
+  // console.log(video)
+
   const casts = cast_info.cast.map(
     (actor) => actor.profile_path && <Cast_card cast_data={actor} />
   );
@@ -17,10 +24,11 @@ const Movie = ({ data, cast_info, reviews, trailer }) => {
   ));
   const router = useRouter();
   const { view } = router.query;
-  console.log(view);
+  // console.log(view);
   const imgPath = "https://image.tmdb.org/t/p/original";
 
   return (
+   
     <div className="mx-auto md:w-9/12 my-20 text-white px-4 relative">
       <div className="grid place-content-center">
         <Image
@@ -100,9 +108,19 @@ const Movie = ({ data, cast_info, reviews, trailer }) => {
                 {casts}
               </div>
             ) : view == "reviews" ? (
-              <div className="w-full flex flex-col gap-3">{reviews_data}</div>
+              <div className="w-full flex flex-col gap-3"><Rating />{reviews_data}</div>
             ) : (
-              <div>{null}</div>
+              <div className="w-full">
+                <iframe
+                className="w-full h-96"
+                  id="video"
+                  src={`https://www.youtube.com/embed/${video[video.length-1].key}`}
+                  title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                ></iframe>
+              </div>
             )}
           </div>
         </div>
@@ -113,11 +131,11 @@ const Movie = ({ data, cast_info, reviews, trailer }) => {
 
 export default Movie;
 export const getStaticPaths = async () => {
-  const res = await axios.get(
+  const res = await fetch(
     `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.API_KEY}&language=en-US&page=1`
   );
-  
-  const path = res.results.map((movie) => ({
+  const response = await res.json()
+  const path = response.results.map((movie) => ({
     params: { id: movie.id.toString() },
   }));
 
@@ -128,19 +146,14 @@ export const getStaticPaths = async () => {
 };
 export const getStaticProps = async ({ params }) => {
   const API_URL = "https://api.themoviedb.org/3/";
-  const data = await axios.get(
-    `${API_URL}movie/${params.id}?api_key=${process.env.API_KEY}&language=en-US&page=1`
-  );
- 
-  const cast_info = await axios.get(
-    `${API_URL}movie/${params.id}/credits?api_key=${process.env.API_KEY}&language=en-US`
-  );
+  const data_url = `${API_URL}movie/${params.id}?api_key=${process.env.API_KEY}&language=en-US&page=1`
+  const cast_url = `${API_URL}movie/${params.id}/credits?api_key=${process.env.API_KEY}&language=en-US`
+  const review_url = `${API_URL}movie/${params.id}/reviews?api_key=${process.env.API_KEY}&language=en-US`
+  const trailer_url =  `${API_URL}movie/${params.id}/videos?api_key=${process.env.API_KEY}&language=en-US`
   
-  const reviews = await axios.get(
-    `${API_URL}movie/${params.id}/reviews?api_key=${process.env.API_KEY}&language=en-US`
-  );
-  const trailer = await axios.get(
-    `${API_URL}movie/${params.id}/videos?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US`
-  );
+  const data = await (await fetch(data_url)).json()
+  const cast_info = await (await fetch(cast_url)).json();
+  const reviews = await (await fetch(review_url)).json();
+  const trailer = await (await fetch(trailer_url)).json();
   return { props: { data, cast_info, reviews, trailer } };
 };
