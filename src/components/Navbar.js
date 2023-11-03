@@ -14,10 +14,10 @@ const Navbar = ({searchTerm}) => {
         <Link href="/movie" className=''>Movies</Link>
         <ul className='border px-3 py-2 absolute hidden group-hover:block'>
           <li>
-            <Link href='/movie'>Movies</Link>
+            <Link href='/movie' shallow={false}>Movies</Link>
           </li>
           <li>
-            <Link href='/tv'>Series</Link>
+            <Link href='/tv' shallow={true}>Series</Link>
           </li>
         </ul>
       </li>

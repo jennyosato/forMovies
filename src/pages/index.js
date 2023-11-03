@@ -87,7 +87,7 @@ export default function Home({ hero, series }) {
           </div>
           <div className="py-6 flex justify-center">
             <button 
-            onClick={() => router.push('/movie')}
+            onClick={() => router.push('/movie?page=2')}
             className="rounded-lg py-2 px-4 text-white bg-[#880808] ">
               See More
             </button>
@@ -121,7 +121,7 @@ export default function Home({ hero, series }) {
           </div>
           <div className="py-6 flex justify-center">
             <button
-            onClick={() => router.push('/tv')}
+            onClick={() => router.push('/tv?page=2')}
             className="rounded-lg py-2 px-4 text-white bg-[#880808] ">
               See More
             </button>
@@ -136,7 +136,7 @@ export const getStaticProps = async () => {
     `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&include_adult=false&include_video=true&language=en-US&page=1&primary_release_year=2023&sort_by=popularity.desc&with_genres=28%20`
   );
   const seriesdata = await fetch(
-    `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.API_KEY}&first_air_date_year=2023&include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc&with_original_language=en`
+    `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.API_KEY}&first_air_date_year=2017&include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc&with_original_language=en&vote_count.gte=200`
   );
 
   const hero = await url.json();

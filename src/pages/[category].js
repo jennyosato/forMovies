@@ -9,9 +9,10 @@ const Movies = () => {
   const router = useRouter()
 
   const cat = router.query.category
-  console.log(router.query)
+  //console.log(router.query)
 
-    const url = cat === 'movie' ? `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.NEXT_PUBLIC_API_KEY}&include_adult=false&include_video=true&language=en-US&page=${page}&primary_release_year=2023&sort_by=popularity.desc&with_genres=28%20`:
+    const url = cat === 'movie' ?
+     `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.NEXT_PUBLIC_API_KEY}&include_adult=false&include_video=true&language=en-US&page=${page}&primary_release_year=2023&sort_by=popularity.desc&with_genres=28%20`:
     `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.NEXT_PUBLIC_API_KEY}&first_air_date_year=2023&include_adult=false&include_null_first_air_dates=false&language=en-US&page=${page}&sort_by=popularity.desc&with_original_language=en`
     
   const handlePageChange = (pg) => {
@@ -45,7 +46,7 @@ const Movies = () => {
 
   if (isLoading) return <span>Loading ...</span>;
   if (isError) return <span>Error: {error.message}</span>;
-  console.log(movies)
+  // console.log(movies)
 
   const pageArr = Array(movies?.data.total_pages)
     .fill()
@@ -82,9 +83,11 @@ export default Movies;
 //   const res = await fetch(
 //     `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.API_KEY}&language=en-US&page=1`
 //   );
-//   const data = await res.json();
-
+//   const movies = await res.json();
+//   const response = await fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${process.env.API_KEY}&first_air_date_year=2023&include_adult=false&include_null_first_air_dates=false&language=en-US&page=${page}&sort_by=popularity.desc&with_original_language=en`
+//   )
+//   const series = await response.json()
 //    return {
-//     props: { data },
+//     props: { movies, series },
 //   };
 // };
