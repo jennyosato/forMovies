@@ -54,8 +54,8 @@ export default function Home({ hero, series }) {
 
   return (
     <div className="">
-      <div className="h-screen w-full mt-4">
-        <div className="w-11/12 mx-auto rounded-md">{heroSlider[indx]}</div>
+      <div className="md:h-screen w-full mt-4">
+        <div className="w-full md:w-11/12 h-full mx-auto rounded-md">{heroSlider[indx]}</div>
         <div className="absolute bottom-8 w-full flex justify-center gap-1 text-gray-200">
           {points}
         </div>

@@ -1,12 +1,15 @@
 import React, {useState} from 'react'
 import Link from 'next/link'
-const Navbar = ({searchTerm}) => {
+const Navbar = ({searchTerm, onOpen}) => {
   const [search, setSearch] = useState('')
   return (
     <>
     <nav className="flex justify-between items-center px-4 py-2 shadow-md bg-black border-b-2 border-[#888] ">
     <div className="border-4 text-3xl font-semibold text-[#880808]">ForMovies</div>
-    <ul className="flex gap-4 text-white font-medium ">
+    <div className='md: hidden'>
+      <button className='text-white' onClick={onOpen}>open</button>
+    </div>
+    <ul className="hidden md:flex gap-4 text-white font-medium ">
       <li className='p-2 hover:text-red-800'>
         <Link href="/">Home</Link>
       </li>
