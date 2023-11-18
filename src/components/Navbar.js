@@ -17,10 +17,10 @@ const Navbar = ({searchTerm, onOpen}) => {
         <Link href="/movie" className=''>Movies</Link>
         <ul className='border px-3 py-2 absolute hidden group-hover:block'>
           <li>
-            <Link href='/movie' shallow={false}>Movies</Link>
+            <Link href='/movie'>Movies</Link>
           </li>
           <li>
-            <Link href='/tv' shallow={true}>Series</Link>
+            <Link href='/tv'>Series</Link>
           </li>
         </ul>
       </li>

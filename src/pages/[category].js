@@ -6,28 +6,31 @@ import { useRouter } from "next/router";
 
 const Movies = () => {
   const [page, setPage] = useState(1);
-  const router = useRouter()
+  const [urls, setUrls] = useState('')
+  const router = useRouter();
 
-  const cat = router.query.category
+  const cat = router.query.category;
   //console.log(router.query)
 
-    const url = cat === 'movie' ?
-     `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.NEXT_PUBLIC_API_KEY}&include_adult=false&include_video=true&language=en-US&page=${page}&primary_release_year=2023&sort_by=popularity.desc&with_genres=28%20`:
-    `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.NEXT_PUBLIC_API_KEY}&first_air_date_year=2023&include_adult=false&include_null_first_air_dates=false&language=en-US&page=${page}&sort_by=popularity.desc&with_original_language=en`
-    
-  const handlePageChange = (pg) => {
-    setPage(pg)
-    router.push(`/${cat}?page=${pg}`)
-  }
-  
+  const url =
+    cat === "movie"
+      ? `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.NEXT_PUBLIC_API_KEY}&include_adult=false&include_video=true&language=en-US&page=${page}&primary_release_year=2023&sort_by=popularity.desc&with_genres=28%20`
+      : `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.NEXT_PUBLIC_API_KEY}&first_air_date_year=2023&include_adult=false&include_null_first_air_dates=false&language=en-US&page=${page}&sort_by=popularity.desc&with_original_language=en`;
 
+  const handlePageChange = (pg) => {
+    setPage(pg);
+    router.push(`/${cat}?page=${pg}`);
+  };
+
+  // console.log(url);
   const fetchMovies = async () => {
-    // const url = cat === 'movie' ? `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.NEXT_PUBLIC_API_KEY}&include_adult=false&include_video=true&language=en-US&page=${num}&primary_release_year=2023&sort_by=popularity.desc&with_genres=28%20`:
-    // `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.NEXT_PUBLIC_API_KEY}&first_air_date_year=2023&include_adult=false&include_null_first_air_dates=false&language=en-US&page=${num}&sort_by=popularity.desc&with_original_language=en`
-    
-    // const url = urlFunc(page)
     return await axios.get(url);
   };
+  // const data = async () => {
+  //   const daa = await fetchMovies();
+  //   console.log(daa);
+  // };
+  // data();
 
   const {
     isLoading,
@@ -38,11 +41,10 @@ const Movies = () => {
     isPreviousData,
   } = useQuery({
     queryKey: ["Movies", page],
-    queryFn: () => fetchMovies(),
+    queryFn: async () => await fetchMovies(),
     keepPreviousData: true,
     // enabled: !!cat
   });
-
 
   if (isLoading) return <span>Loading ...</span>;
   if (isError) return <span>Error: {error.message}</span>;
@@ -53,7 +55,7 @@ const Movies = () => {
     .map((_, index) => index + 1);
   const paginate =
     page <= 5
-      ? pageArr.slice(0, 5).concat('...', pageArr.length)
+      ? pageArr.slice(0, 5).concat("...", pageArr.length)
       : page >= pageArr.length - 5
       ? pageArr.slice(pageArr.length - 5)
       : pageArr.slice(page - 3, page + 2);
@@ -62,7 +64,10 @@ const Movies = () => {
       <div className="mt-20 text-white text-center">
         {paginate.map((pg) => {
           return (
-            <button className="py-2 px-3 m-2 border shadow " onClick={() => handlePageChange(pg)}>
+            <button
+              className="py-2 px-3 m-2 border shadow "
+              onClick={() => handlePageChange(pg)}
+            >
               {pg}
             </button>
           );
